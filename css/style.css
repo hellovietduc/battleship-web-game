@@ -1,0 +1,55 @@
+body {
+  font-size: 100%;
+  color: white;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.action-bar button {
+  color: white;
+  background-color: green;
+  border: 1px solid white;
+  margin: 20px 0;
+  padding: 1% 1%;
+}
+
+.action-bar button:hover {
+  color: green;
+  background-color: white;
+  border: 1px solid green;
+}
+
+div#noti {
+  margin-bottom: 10px;
+}
+
+.box-container {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.box, .box-hit {
+  width: 9%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+
+.box {
+  border: 1px solid green;
+}
+
+.box:hover {
+  background-color: yellow;
+  border: none;
+}
+
+.box-hit {
+  background-color: red;
+  border: none;
+}
+
+.text-center {
+  text-align: center;
+}

@@ -3,11 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
   <title>BattleShip</title>
 </head>
 <body>
-  <h1>BattleShip</h1>
-  <div id="noti"></div>
+  
+  <div class="text-center">
+    <h1>BattleShip 1D</h1>
+  </div>
+
+  <div id="instruction" class="text-center">
+    There is a ship 3 boxes long down there. If you're ready to go sink it, click Play.<br>
+    If this game is so interesting you want to play again, click Restart. Good luck!
+  </div>
+
+  <div class="action-bar text-center">
+    <button id="play">Play</button>
+    <button id="restart">Restart</button>
+  </div>
+
+  <div id="play-ground">
+    <div id="noti" class="text-center">Number of guesses: 0</div>
+    <table class="box-container text-center">
+      <tr>
+        <td id="col-0" class="box"></td>
+        <td id="col-1" class="box"></td>
+        <td id="col-2" class="box"></td>
+        <td id="col-3" class="box"></td>
+        <td id="col-4" class="box"></td>
+        <td id="col-5" class="box"></td>
+        <td id="col-6" class="box"></td>
+        <td id="col-7" class="box"></td>
+        <td id="col-8" class="box"></td>
+        <td id="col-9" class="box"></td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
