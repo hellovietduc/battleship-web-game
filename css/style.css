@@ -6,6 +6,10 @@ body {
   padding: 0;
 }
 
+div#instruction {
+  margin: auto 3%;
+}
+
 .action-bar button {
   color: white;
   background-color: green;
@@ -20,6 +24,10 @@ body {
   border: 1px solid green;
 }
 
+div#play-ground {
+  margin-bottom: 30px;
+}
+
 div#noti {
   margin-bottom: 10px;
 }
@@ -27,29 +35,61 @@ div#noti {
 .box-container {
   border-spacing: 0;
   border-collapse: collapse;
-  width: 100%;
+  width: 40%;
+  margin: 0 auto;
 }
 
-.box, .box-hit {
-  width: 9%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+.box, .box-choosen, .box-hit {
+  width: 10%;
+  padding-top: 10%;
 }
 
 .box {
   border: 1px solid green;
 }
 
-.box:hover {
+.box:hover, .box-choosen {
   background-color: yellow;
-  border: none;
+  border: 1px solid yellow;
 }
 
 .box-hit {
   background-color: red;
-  border: none;
+  border: 1px solid red;
 }
 
 .text-center {
   text-align: center;
+}
+
+@media (max-width: 720px) {
+
+  .box-container {
+    width: 50%;
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  .box-container {
+    width: 60%;
+  }
+
+}
+
+@media (max-width: 570px) {
+
+  .box-container {
+    width: 70%;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .box-container {
+    width: 80%;
+  }
+
 }
