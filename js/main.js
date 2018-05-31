@@ -1,156 +1,142 @@
-const shipCoordinate = { x: [], y: [] };
-const shipLength = 4;
-const isCoordinateSatisfying = c => c >= 0 && c <= 9;
-let isSunk = true;
-let guesses;
-
 $(document).ready(() => {
-    showInstruction(true);
-    showPlayGround(false);
+    view.showInstruction(true);
+    view.showPlayGround(false);
 })
 
-// Play button handler
-// Can only be pressed when game ends
 $("#play").click(() => {
-    if (isSunk) {
-        showInstruction(false);
-        showPlayGround(true);
-        initGame();
-    }
+    view.showInstruction(false);
+    view.showPlayGround(true);
+    init();
 });
 
-// Restart button handler
-// Can be pressed anytime
 $("#restart").click(() => {
-    shipCoordinate.x.splice(0);
-    shipCoordinate.y.splice(0);
-    initGame();
+    init();
 });
 
-// Boxes handler
-// Can only be pressed when in game
 $(".box").click(function () {
-    if (!isSunk) {
-        const userGuess = {
-            x: parseInt(this.id.charAt(1)),
-            y: parseInt(this.id.charAt(2))
-        }
-        guesses++;
-        updateNumOfGuesses();
-        markChoosenBox(this.id);
+    if (view.isBoxPressed(this.id) || game.isGameOver()) return;
 
-        const hit = checkGuess(userGuess);
-        if (hit) {
-            markShipAsHit(userGuess);
-            markHitBox(userGuess);
-            if (isShipSunk()) {
-                isSunk = true;
-                showResult();
-            }
+    const x = +this.id.charAt(1);
+    const y = +this.id.charAt(2);
+    const hit = game.fireAt(x, y);
+    
+    view.updateNoti(`Hits: ${game.countSunkShips()}, Shots: ${game.numOfShots}`);
+    
+    if (hit) {
+        view.markHitBox(this.id);
+        if (game.isGameOver()) {
+            const accuracy = Math.round((game.numOfShips*100/game.numOfShots)*100)/100;
+            view.updateNoti(`You won! Your accuracy is ${accuracy}%.`);
         }
+    }
+    else {
+        view.markMissBox(this.id);
     }
 });
 
-/*** View functions ***/
-
-function showInstruction(show) {
-    const instructionDiv = $("#instruction");
-    if (show) instructionDiv.css("display", "block");
-    else instructionDiv.css("display", "none");
+const init = () => {
+    view.unmarkAllBoxes();
+    view.updateNoti("Hits: 0, Shots: 0");
+    game.removeShips();
+    game.generateShips();
+    game.numOfShots = 0;
 }
 
-function showPlayGround(show) {
-    const playGroundDiv = $("#play-ground");
-    if (show) playGroundDiv.css("display", "block");
-    else playGroundDiv.css("display", "none");
-}
+class Ship {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.isSunk = false;
+    }
 
-function updateNumOfGuesses() {
-    $("#noti").text("Number of guesses: " + guesses);
-}
-
-function markChoosenBox(id) {
-    $("#" + id).removeClass("box").addClass("box-choosen");
-}
-
-function markHitBox(coordinate) {
-    $("#c" + coordinate.x + coordinate.y).removeClass("box").addClass("box-hit");
-}
-
-function unmarkAllBoxes() {
-    $(".box-choosen").removeClass("box-choosen").addClass("box");
-    $(".box-hit").removeClass("box-hit").addClass("box");
-}
-
-function showResult() {
-    const accuracy = Math.round((3*100/guesses)*100)/100;
-    $("#noti").text("You won! Your accuracy is " + accuracy + "%.");
-}
-
-/*** Game logic functions ***/
-
-function initGame() {
-    locateShip();
-    isSunk = false;
-    guesses = 0;
-    updateNumOfGuesses();
-    unmarkAllBoxes();
-}
-
-function locateShip() {
-    const baseX = Math.floor(Math.random()*10); // Random number: 0-9
-    const baseY = Math.floor(Math.random()*10);
-    const horizontalShip = randomOf(0, 1); // 0 means vertical ship
-
-    if (horizontalShip) createShip(shipCoordinate.y, shipCoordinate.x, baseY, baseX);
-    else createShip(shipCoordinate.x, shipCoordinate.y, baseX, baseY);
-}
-
-function checkGuess(guess) {
-    return shipCoordinate.x.includes(guess.x) && shipCoordinate.y.includes(guess.y);
-}
-
-function markShipAsHit(coordinate) {
-    shipCoordinate.x.splice(shipCoordinate.x.indexOf(coordinate.x), 1);
-    shipCoordinate.y.splice(shipCoordinate.y.indexOf(coordinate.y), 1);
-}
-
-function isShipSunk() {
-    return shipCoordinate.x.length === 0 && shipCoordinate.y.length === 0;
-}
-
-// Create a ship with predefined length that fits in the map
-function createShip(staticCoordinate, dynamicCoordinate, staticBase, dynamicBase) {
-    // Locate static coordinate
-    for (let i = 0; i < shipLength; i++) staticCoordinate.push(staticBase);
-
-    // Locate dynamic coordinate
-    while (true) {
-        dynamicCoordinate.push(dynamicBase);
-        expandArray(dynamicCoordinate, shipLength);
-        if (dynamicCoordinate.every(isCoordinateSatisfying)) break;
-        else dynamicCoordinate.splice(0);
+    fire() {
+        this.isSunk = true;
     }
 }
 
-// Return a random number from 2 numbers passed in
-function randomOf(num1, num2) {
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
-    if (isNaN(num1) && isNaN(num2)) return null;
-    if (isNaN(num1)) return num2;
-    if (isNaN(num2)) return num1;
-    const rand = Math.floor(Math.random()*10);
-    return rand % 2 === 0 ? num1 : num2;
+const game = {
+    ships: [],
+    numOfShips: 5,
+    numOfShots: 0,
+    
+    isShipOnMap: (ship) => {
+        return ship.x >= 0 && ship.x <= 9
+            && ship.y >= 0 && ship.y <= 9;
+    },
+
+    generateShips: function() {
+        for (let i = 0; i < this.numOfShips; i++) {
+            let newShip;
+            do {
+                const x = Math.floor(Math.random()*10);
+                const y = Math.floor(Math.random()*10);
+                newShip = new Ship(x, y);
+            } while (!this.isShipOnMap(newShip) && this.ships.includes(newShip));
+            this.ships.push(newShip);
+        }
+    },
+
+    removeShips: function() {
+        this.ships.length = 0;
+    },
+
+    init: function() {
+        this.removeShips();
+        this.generateShips();
+        this.numOfShots = 0;
+    },
+
+    fireAt: function(x, y) {
+        this.numOfShots++;
+        const hitShip = this.ships.find(ship => ship.x === x && ship.y === y);
+        if (hitShip) {
+            hitShip.fire();
+            return true;
+        }
+        return false;
+    },
+
+    countSunkShips: function() {
+        return this.ships.map(ship => ship.isSunk ? 1 : 0)
+                         .reduce((acc, cval) => acc + cval);
+    },
+
+    isGameOver: function() {
+        return this.ships.every(ship => ship.isSunk);
+    }
 }
 
-// Expand an array 'times' times, with the expanded values are
-// first element minus 1 or last element plus 1
-function expandArray(arr, times) {
-    for (let i = 0; i < times - 1; i++) {
-        const posible1 = arr[0] - 1;
-        const posible2 = arr[arr.length - 1] + 1;
-        arr.push(randomOf(posible1, posible2));
-        arr.sort((a, b) => a - b);
-    }
+const view = {
+    instruction: $("#instruction"),
+    playGround: $("#play-ground"),
+    noti: $("#noti"),
+
+    showInstruction: function(show) {
+        if (show) this.instruction.css("display", "block");
+        else this.instruction.css("display", "none");
+    },
+
+    showPlayGround: function(show) {
+        if (show) this.playGround.css("display", "block");
+        else this.playGround.css("display", "none");
+    },
+
+    updateNoti: function(message) {
+        this.noti.text(message);
+    },
+
+    markMissBox: (id) => {
+        $("#" + id).removeClass("box").addClass("box-miss");
+    },
+
+    markHitBox: (id) => {
+        $("#" + id).removeClass("box").addClass("box-hit");
+    },
+
+    unmarkAllBoxes: () => {
+        $(".box-miss").removeClass("box-miss").addClass("box");
+        $(".box-hit").removeClass("box-hit").addClass("box");
+    },
+
+    isBoxPressed: (id) => !$("#" + id).hasClass("box")
 }

@@ -39,23 +39,31 @@ div#noti {
   margin: 0 auto;
 }
 
-.box, .box-choosen, .box-hit {
+.box, .box-miss, .box-hit {
   width: 10%;
   padding-top: 10%;
 }
 
-.box {
+.box, .box-miss, .box-hit {
   border: 1px solid green;
 }
 
-.box:hover, .box-choosen {
-  background-color: yellow;
-  border: 1px solid yellow;
+.box:hover, .box-miss, .box-hit {
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.box:hover {
+  background-image: url("img/crosshair.png");
+}
+
+.box-miss {
+  background-image: url("img/miss.png");
 }
 
 .box-hit {
-  background-color: red;
-  border: 1px solid red;
+  background-image: url("img/ship.png");
 }
 
 .text-center {
