@@ -25,10 +25,11 @@ div#instruction {
 }
 
 div#play-ground {
+  display: none;
   margin-bottom: 30px;
 }
 
-div#noti {
+div#noti, div#timer {
   margin-bottom: 10px;
 }
 

@@ -1,8 +1,3 @@
-$(document).ready(() => {
-    view.showInstruction(true);
-    view.showPlayGround(false);
-})
-
 $("#play").click(() => {
     view.showInstruction(false);
     view.showPlayGround(true);
@@ -14,19 +9,20 @@ $("#restart").click(() => {
 });
 
 $(".box").click(function () {
-    if (view.isBoxPressed(this.id) || game.isGameOver()) return;
+    if (view.isBoxPressed(this.id) || game.isGameOver) return;
 
     const x = +this.id.charAt(1);
     const y = +this.id.charAt(2);
     const hit = game.fireAt(x, y);
     
-    view.updateNoti(`Hits: ${game.countSunkShips()}, Shots: ${game.numOfShots}`);
+    view.updateScore(game.countSunkShips(), game.numOfShots);
     
     if (hit) {
         view.markHitBox(this.id);
-        if (game.isGameOver()) {
+        if (game.areAllShipsSunk()) {
             const accuracy = Math.round((game.numOfShips*100/game.numOfShots)*100)/100;
-            view.updateNoti(`You won! Your accuracy is ${accuracy}%.`);
+            view.sendMessage(`You won! Your accuracy is ${accuracy}%.`);
+            game.isGameOver = true;
         }
     }
     else {
@@ -36,10 +32,10 @@ $(".box").click(function () {
 
 const init = () => {
     view.unmarkAllBoxes();
-    view.updateNoti("Hits: 0, Shots: 0");
-    game.removeShips();
-    game.generateShips();
-    game.numOfShots = 0;
+    view.updateScore(0, 0);
+    view.updateTimer(game.countdownTime);
+    game.init();
+    game.startCountdown(view.updateTimer);
 }
 
 class Ship {
@@ -58,6 +54,8 @@ const game = {
     ships: [],
     numOfShips: 5,
     numOfShots: 0,
+    countdownTime: 30,
+    isGameOver: false,
     
     isShipOnMap: (ship) => {
         return ship.x >= 0 && ship.x <= 9
@@ -84,6 +82,24 @@ const game = {
         this.removeShips();
         this.generateShips();
         this.numOfShots = 0;
+        this.isGameOver = false;
+    },
+
+    startCountdown: function(callback) {
+        let count = this.countdownTime;
+        
+        count1sAndDo(callback);
+
+        function count1sAndDo(callback) {
+            if (count < 1) {
+                game.isGameOver = true;   
+                return;
+            }
+            setTimeout(() => {
+                callback(--count);
+                count1sAndDo(callback);
+            }, 1000);
+        }
     },
 
     fireAt: function(x, y) {
@@ -101,7 +117,7 @@ const game = {
                          .reduce((acc, cval) => acc + cval);
     },
 
-    isGameOver: function() {
+    areAllShipsSunk: function() {
         return this.ships.every(ship => ship.isSunk);
     }
 }
@@ -110,6 +126,7 @@ const view = {
     instruction: $("#instruction"),
     playGround: $("#play-ground"),
     noti: $("#noti"),
+    timer: $("#timer"),
 
     showInstruction: function(show) {
         if (show) this.instruction.css("display", "block");
@@ -121,8 +138,17 @@ const view = {
         else this.playGround.css("display", "none");
     },
 
-    updateNoti: function(message) {
+    sendMessage: function(message) {
         this.noti.text(message);
+    },
+
+    updateScore: function(hits, shots) {
+        this.noti.text(`Hits: ${hits}, Shots: ${shots}`);
+    },
+
+    updateTimer: function(time) {
+        view.timer.text(time + 's');
+        if (time === 0) view.sendMessage('You lost!');
     },
 
     markMissBox: (id) => {
