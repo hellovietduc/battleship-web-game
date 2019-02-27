@@ -1,2 +1,2 @@
-# battleship-game
-A simple sample JavaScript game
+# battleship-web-game
+Play Battleship in your browser
