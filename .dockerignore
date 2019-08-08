@@ -1,0 +1,9 @@
+.git/
+.vscode/
+css/
+js/
+.*ignore
+Dockerfile
+LICENSE
+*.md
+webpack.config.js

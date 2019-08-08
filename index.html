@@ -1,155 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>BattleShip</title>
-</head>
-<body>
-  
-  <div class="text-center">
-    <h1>BattleShip 2D</h1>
-  </div>
-
-  <div id="instruction" class="text-center">
-    There are 5 ships on the map down there. If you're ready to go sink it, click Play.<br>
-    If this game is so interesting you want to play again, click Restart. Good luck!
-  </div>
-
-  <div class="action-bar text-center">
-    <button id="play">Play</button>
-    <button id="restart">Restart</button>
-  </div>
-
-  <div id="play-ground">
-    <div id="noti" class="text-center"></div>
-    <div id="timer" class="text-center"></div>
-    <table class="box-container">
-      <tr>
-        <td id="c00" class="box"></td>
-        <td id="c10" class="box"></td>
-        <td id="c20" class="box"></td>
-        <td id="c30" class="box"></td>
-        <td id="c40" class="box"></td>
-        <td id="c50" class="box"></td>
-        <td id="c60" class="box"></td>
-        <td id="c70" class="box"></td>
-        <td id="c80" class="box"></td>
-        <td id="c90" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c01" class="box"></td>
-        <td id="c11" class="box"></td>
-        <td id="c21" class="box"></td>
-        <td id="c31" class="box"></td>
-        <td id="c41" class="box"></td>
-        <td id="c51" class="box"></td>
-        <td id="c61" class="box"></td>
-        <td id="c71" class="box"></td>
-        <td id="c81" class="box"></td>
-        <td id="c91" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c02" class="box"></td>
-        <td id="c12" class="box"></td>
-        <td id="c22" class="box"></td>
-        <td id="c32" class="box"></td>
-        <td id="c42" class="box"></td>
-        <td id="c52" class="box"></td>
-        <td id="c62" class="box"></td>
-        <td id="c72" class="box"></td>
-        <td id="c82" class="box"></td>
-        <td id="c92" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c03" class="box"></td>
-        <td id="c13" class="box"></td>
-        <td id="c23" class="box"></td>
-        <td id="c33" class="box"></td>
-        <td id="c43" class="box"></td>
-        <td id="c53" class="box"></td>
-        <td id="c63" class="box"></td>
-        <td id="c73" class="box"></td>
-        <td id="c83" class="box"></td>
-        <td id="c93" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c04" class="box"></td>
-        <td id="c14" class="box"></td>
-        <td id="c24" class="box"></td>
-        <td id="c34" class="box"></td>
-        <td id="c44" class="box"></td>
-        <td id="c54" class="box"></td>
-        <td id="c64" class="box"></td>
-        <td id="c74" class="box"></td>
-        <td id="c84" class="box"></td>
-        <td id="c94" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c05" class="box"></td>
-        <td id="c15" class="box"></td>
-        <td id="c25" class="box"></td>
-        <td id="c35" class="box"></td>
-        <td id="c45" class="box"></td>
-        <td id="c55" class="box"></td>
-        <td id="c65" class="box"></td>
-        <td id="c75" class="box"></td>
-        <td id="c85" class="box"></td>
-        <td id="c95" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c06" class="box"></td>
-        <td id="c16" class="box"></td>
-        <td id="c26" class="box"></td>
-        <td id="c36" class="box"></td>
-        <td id="c46" class="box"></td>
-        <td id="c56" class="box"></td>
-        <td id="c66" class="box"></td>
-        <td id="c76" class="box"></td>
-        <td id="c86" class="box"></td>
-        <td id="c96" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c07" class="box"></td>
-        <td id="c17" class="box"></td>
-        <td id="c27" class="box"></td>
-        <td id="c37" class="box"></td>
-        <td id="c47" class="box"></td>
-        <td id="c57" class="box"></td>
-        <td id="c67" class="box"></td>
-        <td id="c77" class="box"></td>
-        <td id="c87" class="box"></td>
-        <td id="c97" class="box"></td>
-      </tr>
-      <tr>
-        <td id="c08" class="box"></td>
-        <td id="c18" class="box"></td>
-        <td id="c28" class="box"></td>
-        <td id="c38" class="box"></td>
-        <td id="c48" class="box"></td>
-        <td id="c58" class="box"></td>
-        <td id="c68" class="box"></td>
-        <td id="c78" class="box"></td>
-        <td id="c88" class="box"></td>
-        <td id="c98" class="box"></td>
-      </tr
-      ><tr>
-        <td id="c09" class="box"></td>
-        <td id="c19" class="box"></td>
-        <td id="c29" class="box"></td>
-        <td id="c39" class="box"></td>
-        <td id="c49" class="box"></td>
-        <td id="c59" class="box"></td>
-        <td id="c69" class="box"></td>
-        <td id="c79" class="box"></td>
-        <td id="c89" class="box"></td>
-        <td id="c99" class="box"></td>
-      </tr>
-    </table>
-  </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>BattleShip</title>
+  </head>
+  <body>
+    <div class="text-center">
+      <h1>BattleShip 2D</h1>
+    </div>
+    <div id="instruction" class="text-center">
+      There are 5 ships on the map down there. If you're ready to go sink it, click Play.<br />
+      If this game is so interesting you want to play again, click Restart. Good luck!
+    </div>
+    <div class="action-bar text-center">
+      <button id="play">Play</button>
+      <button id="restart">Restart</button>
+    </div>
+    <div id="play-ground">
+      <div id="noti" class="text-center"></div>
+      <div id="timer" class="text-center"></div>
+      <table class="box-container">
+        <tr>
+          <td id="c00" class="box"></td>
+          <td id="c10" class="box"></td>
+          <td id="c20" class="box"></td>
+          <td id="c30" class="box"></td>
+          <td id="c40" class="box"></td>
+          <td id="c50" class="box"></td>
+          <td id="c60" class="box"></td>
+          <td id="c70" class="box"></td>
+          <td id="c80" class="box"></td>
+          <td id="c90" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c01" class="box"></td>
+          <td id="c11" class="box"></td>
+          <td id="c21" class="box"></td>
+          <td id="c31" class="box"></td>
+          <td id="c41" class="box"></td>
+          <td id="c51" class="box"></td>
+          <td id="c61" class="box"></td>
+          <td id="c71" class="box"></td>
+          <td id="c81" class="box"></td>
+          <td id="c91" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c02" class="box"></td>
+          <td id="c12" class="box"></td>
+          <td id="c22" class="box"></td>
+          <td id="c32" class="box"></td>
+          <td id="c42" class="box"></td>
+          <td id="c52" class="box"></td>
+          <td id="c62" class="box"></td>
+          <td id="c72" class="box"></td>
+          <td id="c82" class="box"></td>
+          <td id="c92" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c03" class="box"></td>
+          <td id="c13" class="box"></td>
+          <td id="c23" class="box"></td>
+          <td id="c33" class="box"></td>
+          <td id="c43" class="box"></td>
+          <td id="c53" class="box"></td>
+          <td id="c63" class="box"></td>
+          <td id="c73" class="box"></td>
+          <td id="c83" class="box"></td>
+          <td id="c93" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c04" class="box"></td>
+          <td id="c14" class="box"></td>
+          <td id="c24" class="box"></td>
+          <td id="c34" class="box"></td>
+          <td id="c44" class="box"></td>
+          <td id="c54" class="box"></td>
+          <td id="c64" class="box"></td>
+          <td id="c74" class="box"></td>
+          <td id="c84" class="box"></td>
+          <td id="c94" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c05" class="box"></td>
+          <td id="c15" class="box"></td>
+          <td id="c25" class="box"></td>
+          <td id="c35" class="box"></td>
+          <td id="c45" class="box"></td>
+          <td id="c55" class="box"></td>
+          <td id="c65" class="box"></td>
+          <td id="c75" class="box"></td>
+          <td id="c85" class="box"></td>
+          <td id="c95" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c06" class="box"></td>
+          <td id="c16" class="box"></td>
+          <td id="c26" class="box"></td>
+          <td id="c36" class="box"></td>
+          <td id="c46" class="box"></td>
+          <td id="c56" class="box"></td>
+          <td id="c66" class="box"></td>
+          <td id="c76" class="box"></td>
+          <td id="c86" class="box"></td>
+          <td id="c96" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c07" class="box"></td>
+          <td id="c17" class="box"></td>
+          <td id="c27" class="box"></td>
+          <td id="c37" class="box"></td>
+          <td id="c47" class="box"></td>
+          <td id="c57" class="box"></td>
+          <td id="c67" class="box"></td>
+          <td id="c77" class="box"></td>
+          <td id="c87" class="box"></td>
+          <td id="c97" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c08" class="box"></td>
+          <td id="c18" class="box"></td>
+          <td id="c28" class="box"></td>
+          <td id="c38" class="box"></td>
+          <td id="c48" class="box"></td>
+          <td id="c58" class="box"></td>
+          <td id="c68" class="box"></td>
+          <td id="c78" class="box"></td>
+          <td id="c88" class="box"></td>
+          <td id="c98" class="box"></td>
+        </tr>
+        <tr>
+          <td id="c09" class="box"></td>
+          <td id="c19" class="box"></td>
+          <td id="c29" class="box"></td>
+          <td id="c39" class="box"></td>
+          <td id="c49" class="box"></td>
+          <td id="c59" class="box"></td>
+          <td id="c69" class="box"></td>
+          <td id="c79" class="box"></td>
+          <td id="c89" class="box"></td>
+          <td id="c99" class="box"></td>
+        </tr>
+      </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>

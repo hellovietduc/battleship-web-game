@@ -29,7 +29,8 @@ div#play-ground {
   margin-bottom: 30px;
 }
 
-div#noti, div#timer {
+div#noti,
+div#timer {
   margin-bottom: 10px;
 }
 
@@ -40,31 +41,37 @@ div#noti, div#timer {
   margin: 0 auto;
 }
 
-.box, .box-miss, .box-hit {
+.box,
+.box-miss,
+.box-hit {
   width: 10%;
   padding-top: 10%;
 }
 
-.box, .box-miss, .box-hit {
+.box,
+.box-miss,
+.box-hit {
   border: 1px solid green;
 }
 
-.box:hover, .box-miss, .box-hit {
+.box:hover,
+.box-miss,
+.box-hit {
   background-position: 50% 50%;
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 .box:hover {
-  background-image: url("img/crosshair.png");
+  background-image: url('img/crosshair.png');
 }
 
 .box-miss {
-  background-image: url("img/miss.png");
+  background-image: url('img/miss.png');
 }
 
 .box-hit {
-  background-image: url("img/ship.png");
+  background-image: url('img/ship.png');
 }
 
 .text-center {
@@ -72,33 +79,25 @@ div#noti, div#timer {
 }
 
 @media (max-width: 720px) {
-
   .box-container {
     width: 50%;
   }
-
 }
 
 @media (max-width: 640px) {
-
   .box-container {
     width: 60%;
   }
-
 }
 
 @media (max-width: 570px) {
-
   .box-container {
     width: 70%;
   }
-
 }
 
 @media (max-width: 480px) {
-
   .box-container {
     width: 80%;
   }
-
 }
