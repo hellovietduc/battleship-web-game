@@ -1,0 +1,12 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx serve",
+    "build": "webpack && cp index.html dist/index.html && cp -r css dist/css"
+  },
+  "devDependencies": {
+    "webpack": "5.97.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
